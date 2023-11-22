@@ -1,3 +1,5 @@
+Source Code for ORACLE DATA-BASE
+
 CUSTOMER 
  
 create table customer(customer_id number(15), customer_name varchar2(20), customer_contact1 
