@@ -1,0 +1,512 @@
+CUSTOMER 
+ 
+create table customer(customer_id number(15), customer_name varchar2(20), customer_contact1 
+number(15), customer_contact2 number(15),  a_id number(15),rating_id number(15), primary key(customer_id), foreign key(a_id) references address(a_id), foreign key(rating_id) references rating(rating_id)); 
+
+
+ADDRESS 
+ 
+create table address(a_id number(15) primary key,customer_city varchar2(20), customer_country 
+varchar2(20)); 
+
+
+RATING 
+ 
+create table rating(rating_id number(15) primary key,rating_score number(15), comments varchar(20)); 
+ 
+
+MENU 
+  
+create table menu(food_id number(15),food_name varchar2(20), food_status varchar2(20), food_price number(15), rating_id number(15), primary key(food_id), foreign key(rating_id) references rating(rating_id)); 
+
+
+PAYMENT 
+ 
+create table payment(payment_id number(15), customer_id number(15), amount number(15),payment_type varchar2(20), discount number(15), promo_code number(15), dates varchar2(20),  primary key(payment_id), foreign key(customer_id) references customer(customer_id)); 
+
+ 
+FK 
+ 
+create table fk(customer_id number(15), food_id number(15), primary key(customer_id,food_id),foreign key(customer_id) references customer(customer_id), foreign key(food_id) references menu(food_id)); 
+
+
+RESTAURANT 
+ 
+create table restaurant(restaurant_id number(15) primary key, restaurant_name varchar2(20), 
+restaurant_address varchar2(20)); 
+
+
+EMPLOYEE 
+ 
+create table employee(employee_id number(15),employee_name varchar2(20), employee_address varchar2(20), employee_contact1 number(15), employee_contact2 number(15), employee_salary number(15), role varchar2(20), restaurant_id number(15),primary key(employee_id),foreign key(restaurant_id) references restaurant(restaurant_id)); 
+
+
+PAYMENT_EMP 
+ 
+create table payment_emp(payment_id number(15), employee_id number(15), amount number(15),payment_type varchar2(20), discount number(15), promo_code number(15), dates varchar2(20),  primary key(payment_id), foreign key(employee_id) references employee(employee_id)); 
+
+
+DELIVERY MAN 
+ 
+create table delivery_man(rider_id number(15), rider_name varchar2(20), rider_contact1 number(15), rider_contact2 number(15), rider_salary number(15), employee_id number(15), primary key(rider_id), foreign key(employee_id) references employee(employee_id)); 
+ 
+
+ORDERS  
+ 
+create table orders(order_id number(15), order_date varchar2(20), amount number(15), customer_id number(14), primary key(order_id), foreign key(customer_id) references customer(customer_id)); 
+
+
+ORDERS_RD 
+ 
+create table orders_rd(order_id number(15), order_date varchar2(20), amount number(15), rider_id number(14), primary key(order_id), foreign key(rider_id) references delivery_man(rider_id)); 
+
+
+ORDERS_RT 
+ 
+create table orders_rt(order_id number(15), order_date varchar2(20), amount number(15), restaurant_id 
+number(14), primary key(order_id), foreign key(restaurant_id) references restaurant(restaurant_id)); 
+
+
+
+
+----------------------------------------------SEQUENCE------------------------------------------- 
+
+ 
+1)	create sequence customer_seq increment by 1 start with 1 maxvalue 500 nocache nocycle; 
+  
+ 
+2)	create sequence address_a_id_seq increment by 1 start with 1 maxvalue 500 nocache nocycle; 
+ 
+  
+3)	create sequence rating_seq increment by 1 start with 1 maxvalue 500 nocache nocycle; 
+ 
+ 
+4)	create sequence menu_seq increment by 1 start with 1 maxvalue 500 nocache nocycle; 
+ 
+  
+5)	create sequence payment_seq increment by 1 start with 1 maxvalue 500 nocache nocycle; 
+ 
+  
+6)	create sequence fk_seq increment by 1 start with 1 maxvalue 500 nocache nocycle; 
+ 
+  
+7)	create sequence restaurant_seq increment by 1 start with 1 maxvalue 500 nocache nocycle; 
+ 
+  
+8)	create sequence employee_id_seq increment by 1 start with 1 maxvalue 500 nocache nocycle; 
+ 
+  
+9)	create sequence payment_emp_seq increment by 1 start with 1 maxvalue 500 nocache nocycle; 
+ 
+  
+10)	create sequence delivery_seq increment by 1 start with 1 maxvalue 500 nocache nocycle; 
+ 
+ 
+11)	create sequence orders_seq increment by 1 start with 1 maxvalue 500 nocache nocycle; 
+ 
+ 
+12)	create sequence orders_rd_seq increment by 1 start with 1 maxvalue 500 nocache nocycle; 
+  
+ 
+13)	create sequence orders_rt_seq increment by 1 start with 1 maxvalue 500 nocache nocycle; 
+
+
+
+
+User Creation: 
+  
+CREATE USER FDMS 
+             IDENTIFIED BY ADMIN 
+
+
+GRANT PERMIT: 
+
+             Log in to the system admin              Write the command: 
+  
+                 GRANT CONNECT, RESOURCE TO FDMS 
+
+
+GRANT VIEW: 
+
+ 
+GRANT  create view 
+    TO     FDMS 
+
+
+-----------------------------------------DATA INSERTION----------------------------------- 
+ 
+CUSTOMER 
+ 
+ 
+insert into customer values(customer_seq.NEXTVAL,'RAKIB','01978789812','01878789812',1,1); 
+ 
+ 
+insert into customer values(customer_seq.NEXTVAL,'TURABA','01778789813','01378789813',2,2); 
+ 
+ 
+insert into customer values(customer_seq.NEXTVAL,'DRISHTY','01678789814','01578789814',3,3); 
+ 
+ 
+insert into customer values(customer_seq.NEXTVAL,'ALIF','01778789815','01678789815',4,4); 
+ 
+ 
+insert into customer values(customer_seq.NEXTVAL,'EMON','01878789816','01378789816',5,5); 
+ 
+ 
+  
+ADDRESS 
+  
+insert into address values(address_a_id_seq.NEXTVAL,'DHAKA','BANGLADESH'); 
+ 
+ 
+insert into address values(address_a_id_seq.NEXTVAL,'JESSORE','BANGLADESH'); 
+ 
+ 
+insert into address values(address_a_id_seq.NEXTVAL,'KHULNA','BANGLADESH'); 
+ 
+ 
+insert into address values(address_a_id_seq.NEXTVAL,'CHANDPUR','BANGLADESH'); 
+ 
+ 
+insert into address values(address_a_id_seq.NEXTVAL,'PABNA','BANGLADESH'); 
+  
+ 
+ 
+RATING 
+ 
+insert into rating values(rating_seq.NEXTVAL,'5','GOOD'); 
+ 
+ 
+insert into rating values(rating_seq.NEXTVAL,'4','GOOD ENOUGH'); 
+ 
+ 
+insert into rating values(rating_seq.NEXTVAL,'2','BAD'); 
+ 
+ 
+insert into rating values(rating_seq.NEXTVAL,'3','AVERAGE'); 
+ 
+ 
+insert into rating values(rating_seq.NEXTVAL,'5','GOOD'); 
+ 
+ 
+  
+MENU 
+ 
+insert into menu values(menu_seq.NEXTVAL,'KACCHI BIRYANI','AVAILABLE',750,1); 
+ 
+ 
+insert into menu values(menu_seq.NEXTVAL,'MUROG PULAO','UN-AVAILABLE',150,2); insert into menu values(menu_seq.NEXTVAL,'BURGER','AVAILABLE',250,3); 
+ 
+ 
+insert into menu values(menu_seq.NEXTVAL,'FALUDA','AVAILABLE',150,4); 
+ 
+ 
+insert into menu values(menu_seq.NEXTVAL,'CHOCOLATE WAFFLE','UN-AVAILABLE',200,5); 
+ 
+ 
+
+PAYMENT 
+  
+insert into payment values(payment_seq.NEXTVAL, 1, 750, 'ONLINE', 5, 1797, '08 NOVEMBER 2022'); 
+ 
+ 
+insert into payment values(payment_seq.NEXTVAL, 2, 150, 'CASH', 15, 2697, '10 NOVEMBER 2022'); 
+ 
+ 
+insert into payment values(payment_seq.NEXTVAL, 3, 250, 'CASH', 10, 7697, '10 DECEMBER 2022'); 
+ 
+ 
+insert into payment values(payment_seq.NEXTVAL, 4, 150, 'ONLINE', 3, 1987, '15 DECEMBER 2022'); 
+ 
+ 
+insert into payment values(payment_seq.NEXTVAL, 5, 200, 'CASH', 7, 3097, '31 DECEMBER 2022'); 
+ 
+ 
+
+FK 
+  
+insert into fk values(1,1); 
+ 
+ 
+insert into fk values(2,2); 
+ 
+ 
+insert into fk values(3,3); 
+ 
+ 
+insert into fk values(4,4); 
+ 
+ 
+insert into fk values(5,5); 
+ 
+ 
+
+RESTAURANT 
+  
+insert into restaurant values(restaurant_seq.NEXTVAL,'BUKHARA','DHAKA'); 
+ 
+ 
+insert into restaurant values(restaurant_seq.NEXTVAL,'DINE-IN','JESSORE'); 
+ 
+ 
+insert into restaurant values(restaurant_seq.NEXTVAL,'BABY-LON','KHULNA'); 
+ 
+ 
+insert into restaurant values(restaurant_seq.NEXTVAL,'CHILLOX','CHANDPUR'); 
+ 
+ 
+insert into restaurant values(restaurant_seq.NEXTVAL,'DAWAT-E-DARBAR','PABNA'); 
+ 
+ 
+insert into restaurant values(restaurant_seq.NEXTVAL,'PIZZERIA','DHAKA'); 
+ 
+ 
+insert into restaurant values(restaurant_seq.NEXTVAL,'DOMINOES','RAJSHAHI'); 
+ 
+ 
+insert into restaurant values(restaurant_seq.NEXTVAL,'CHEEZ','DHAKA'); 
+ 
+ 
+insert into restaurant values(restaurant_seq.NEXTVAL,'PIZZA HUT','DHAKA'); 
+ 
+  
+ 
+EMPLOYEE 
+ 
+insert into employee values(employee_id_seq.NEXTVAL,'MIR 
+MAHIM','MIRPUR',01945679432,01845679432,40000,'MANAGER',1); 
+ 
+ 
+insert into employee values(employee_id_seq.NEXTVAL,'ARIFUL 
+ISLAM','AGRABAD',01345679454,01745679442,45000,'CONTENT CREATOR',2); 
+ 
+ 
+insert into employee values(employee_id_seq.NEXTVAL,'DIPRA 
+KAR','MOHAMMADPUR',01645679542,01545679489,20000,'FIELD OFFICER',3); 
+ 
+ 
+insert into employee values(employee_id_seq.NEXTVAL,'ARIJIT BARUA','DHANMONDI32',01845679552,01345679467,15000,'OFFICE CLERK',4); 
+ 
+ 
+insert into employee values(employee_id_seq.NEXTVAL,'AKID 
+MAHMUD','MUGDA',01645679442,01845679443,50000,'ADMINISTRATION',5); 
+ 
+ 
+insert into employee values(employee_id_seq.NEXTVAL,'AZMAL','DHANMONDI',01828487943,01845679543,15000,'OFFI CE CLERK',6); 
+ 
+ 
+insert into employee values(employee_id_seq.NEXTVAL,'AKMAL','DHANMONDI',01928483332,017453325465,15000,'OF FICE CLERK',7); 
+ 
+ 
+insert into employee values(employee_id_seq.NEXTVAL,'JOY','GULISTAN',01928236335,01335556465,12000,'OFFICE CLERK',8); 
+ 
+ 
+insert into employee values(employee_id_seq.NEXTVAL,'FAISAL 
+AHMED','UTTARA',01929087943,01789679543,45000,'ADMINISTRATION',9); 
+ 
+ 
+ 
+PAYMENT_EMP 
+ 
+insert into payment_emp values(payment_emp_seq .NEXTVAL,1,750,'ONLINE',5,1797,'08 NOVEMBER 2022'); 
+ 
+ 
+insert into payment_emp values(payment_emp_seq.NEXTVAL,2,150,'CASH',15,2697,'10 NOVEMBER 2022'); 
+ 
+ 
+insert into payment_emp values(payment_emp_seq.NEXTVAL,3,250,'CASH',10,7697,'10 DECEMBER 2022'); 
+ 
+ 
+insert into payment_emp values(payment_emp_seq.NEXTVAL,4,150,'ONLINE',3,1987,'15 DECEMBER 2022'); 
+ 
+ 
+insert into payment_emp values(payment_emp_seq.NEXTVAL,5,200,'CASH',7,3097,'31 DECEMBER 2022'); 
+ 
+
+ 
+DELIVERY_MAN 
+  
+insert into delivery_man values(delivery_seq.NEXTVAL,'ASIF KHAN 
+BG',01960201798,01860201798,10000,1); 
+ 
+ 
+insert into delivery_man values(delivery_seq.NEXTVAL,'AKASH 
+BARMAN',01834201798,01840245798,12000,2); 
+ 
+ 
+insert into delivery_man values(delivery_seq.NEXTVAL,'MASHFIQUE',01760201798,01860201458,11000,3); 
+ 
+ 
+insert into delivery_man values(delivery_seq.NEXTVAL,'PRIOUS 
+CHANDRA',01360201798,01560201767,14000,4); 
+ 
+ 
+insert into delivery_man values(delivery_seq.NEXTVAL,'WASI',01460201798,01760201797,9000,5); 
+ 
+ 
+  
+ 
+ 
+ 
+ORDERS 
+ 
+  
+insert into orders values(orders_seq.NEXTVAL,'08 NOVEMBER 2022',750,1); 
+ 
+ 
+insert into orders values(orders_seq.NEXTVAL,'10 NOVEMBER 2022',150,2); 
+ 
+ 
+insert into orders values(orders_seq.NEXTVAL,'10 DECEMBER 2022',250,3); 
+ 
+ 
+insert into orders values(orders_seq.NEXTVAL,'15 DECEMBER 2022',150,4); 
+ 
+ 
+insert into orders values(orders_seq.NEXTVAL,'31 DECEMBER 2022',200,5); 
+ 
+ 
+  
+ 
+ 
+ORDERS_RD 
+ 
+ 
+ 
+insert into orders_rd values(orders_rd_seq.NEXTVAL,'08 NOVEMBER 2022',750,1); 
+ 
+ 
+insert into orders_rd values(orders_rd_seq.NEXTVAL,'10 NOVEMBER 2022',150,2); 
+ 
+ 
+insert into orders_rd values(orders_rd_seq.NEXTVAL,'10 DECEMBER 2022',250,3); 
+ 
+ 
+insert into orders_rd values(orders_rd_seq.NEXTVAL,'15 DECEMBER 2022',150,4); 
+ 
+ 
+insert into orders_rd values(orders_rd_seq.NEXTVAL,'31 DECEMBER 2022',200,5); 
+ 
+ 
+  
+ 
+ 
+ 
+ORDERS_RD 
+ 
+ 
+insert into orders_rt values(orders_rt_seq.NEXTVAL,'08 NOVEMBER 2022',750,1); 
+ 
+ 
+insert into orders_rt values(orders_rt_seq.NEXTVAL,'10 NOVEMBER 2022',150,2); 
+ 
+ 
+insert into orders_rt values(orders_rt_seq.NEXTVAL,'10 DECEMBER 2022',250,3); 
+ 
+ 
+insert into orders_rt values(orders_rt_seq.NEXTVAL,'15 DECEMBER 2022',150,4); 
+ 
+ 
+insert into orders_rt values(orders_rt_seq.NEXTVAL,'31 DECEMBER 2022',200,5); 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+QUERY WRITING 
+ 
+ 
+Single Row Function: 
+1)	Write a query to display the employee names in lowercase letters. select lower(employee_name) from employee; 
+ 
+ 
+  
+ 
+ 
+ 
+2)	Display the Food name and  food_status joining the columns using concatenation function as food details. 
+ 
+select concat(food_name,food_status) AS Food_Details from menu; 
+ 
+  
+ 
+ 
+ 
+Group row Function: 
+ 
+1)	Find the average, minimum and maximum salary of the employees. Label the columns AVG, MIN and MAX respectively, according to role. 
+ 
+select role, avg(employee_salary) as "avg",min(employee_salary) as "min",max(employee_salary) as "max" from employee group by role; 
+ 
+  
+ 
+ 
+ 
+2)	Display the number of employees whose role is Office Clerk. 
+ 
+select count(*) from employee where role='OFFICE CLERK';  
+ 
+ 
+  
+ 
+ 
+ 
+Sub-Query: 
+ 
+1)	Display the names of food whose price is more than Faluda. 
+ 
+select food_name from menu where food_price > (select food_price FROM menu where food_name = 'FALUDA'); 
+ 
+ 
+  
+ 
+ 
+2)	Display the employee names who are working as manager live in Mirpur Location. 
+ 
+select employee_name FROM employee WHERE role ='Manager' AND employee_address = (SELECT employee_address FROM employee WHERE role = 'MANAGER' AND employee_address = 'MIRPUR'); 
+  
+ 
+ 
+Joining: 
+ 
+NON-EQUIJOIN: 
+ 
+Display restaurant_name, resatuarant_id, food_name, food_price from restaurant and menu Table. 
+ 
+select restaurant.restaurant_id, restaurant.restaurant_name, menu.food_name, menu.food_price from restaurant,menu; 
+ 
+  
+ 
+ 
+ 
+EUIJOIN: 
+ 
+2) Get all the INFORMATION from restaurant and employee where restuarant_id and employee_id is same. 
+ 
+select restaurant.*, employee.* from restaurant, employee where restaurant.restaurant_id = employee.employee_id; 
+  
+ 
+ 
+View: 
+ 
+1)	Display the contents of the cutomerdetailsview view. 
+ 
+select * from cutomerdetailsview; 
+ 
+  
+ 
+ 
+ 
+2)	Write a query to display all customer_name where customer_id  is 2 from cutomerdetailsview 
+ 
+select customer_name from cutomerdetailsview where customer_id=2; 
+ 
+  
+ 
+ 
